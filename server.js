@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
 const TodoItemRoute = require('./routes/todoItems');
+const connectDB = require('./config/db');
 
 const app = express();
 
@@ -11,10 +12,8 @@ app.use(cors());
 
 app.use(TodoItemRoute);
 
-//connect to mongodb
-mongoose.connect(process.env.DB_CONNECTION)
-    .then(() => console.log("Database connected"))
-    .catch(err => console.log(err))
+// connect to database
+connectDB();
 
 const PORT = process.env.PORT || 4001;
 
