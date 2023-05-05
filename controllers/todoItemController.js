@@ -30,13 +30,11 @@ exports.updateTodo = async (req, res) => {
             res.status(400).json('Todo not found');
         } else {
             // check for user
-            const user = await User.findById(req.user.id).select('-password');
-            if (!user) {
+            if (!req.user) {
                 res.status(401).json('Unauthorized, User not found');
             }
-
             // check if logged in user matches the todo user
-            else if (todo.user.toString() !== user.id) {
+            else if (todo.user.toString() !== req.user.id) {
                 res.status(401).json('Unauthorized User');
             } else {
                 await Todo.findByIdAndUpdate(req.params.id, req.body);
@@ -56,14 +54,12 @@ exports.deleteTodo = async (req, res) => {
             res.status(400).json('Todo not found.')
         } else {
             // check for user
-            const user = await User.findById(req.user.id);
-
-            if (!user) {
+            if (!req.user) {
                 res.status(401).json('Unauthorized, User not found');
             }
 
             // check if logged in user matches the todo user
-            else if (todo.user.toString() !== user.id) {
+            else if (todo.user.toString() !== req.user.id) {
                 res.status(401).json('Unauthorized User');
             } else {
                 await Todo.findByIdAndDelete(req.params.id);
