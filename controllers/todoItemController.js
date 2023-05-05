@@ -1,5 +1,4 @@
 const Todo = require('../models/todoItemModel');
-const User = require('../models/userModel');
 
 exports.addItem = async (req, res) => {
     try {
