@@ -54,8 +54,8 @@ const login = async (req, res) => {
 
 }
 
-const getUser = (req, res) => {
-    res.json('user desc');
+const getUser = async (req, res) => {
+    res.status(200).json(req.user);
 }
 
 const generateToken = (id) => {
