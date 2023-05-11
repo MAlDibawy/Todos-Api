@@ -41,8 +41,7 @@ const login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-        res.json({
-            id: user.id,
+        res.status(200).json({
             name: user.name,
             email: user.email,
             token: generateToken(user.id)
@@ -54,9 +53,6 @@ const login = async (req, res) => {
 
 }
 
-const getUser = async (req, res) => {
-    res.status(200).json(req.user);
-}
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
